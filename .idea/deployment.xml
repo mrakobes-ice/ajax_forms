@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="mm" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="UL_TW">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="avto-usluga.ru">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="mm">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/mmentor.ru/public_html" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/mmentor.ru/public_html/contacts" />
+            <excludedPath path="/mmentor.ru/public_html/index.php" />
+            <excludedPath path="/mmentor.ru/public_html/web.config" />
+            <excludedPath path="/mmentor.ru/public_html/sitemap_iblock_1.xml" />
+            <excludedPath path="/mmentor.ru/public_html/.gitignore" />
+            <excludedPath path="/mmentor.ru/public_html/404.php" />
+            <excludedPath path="/mmentor.ru/public_html/sitemap_iblock_8.xml" />
+            <excludedPath path="/mmentor.ru/public_html/1.jpg" />
+            <excludedPath path="/mmentor.ru/public_html/partnery" />
+            <excludedPath path="/mmentor.ru/public_html/favicon.png" />
+            <excludedPath path="/mmentor.ru/public_html/upload" />
+            <excludedPath path="/mmentor.ru/public_html/include" />
+            <excludedPath path="/mmentor.ru/public_html/res" />
+            <excludedPath path="/mmentor.ru/public_html/portfolio" />
+            <excludedPath path="/mmentor.ru/public_html/robots.txt" />
+            <excludedPath path="/mmentor.ru/public_html/mailtest.php" />
+            <excludedPath path="/mmentor.ru/public_html/images" />
+            <excludedPath path="/mmentor.ru/public_html/o-nas" />
+            <excludedPath path="/mmentor.ru/public_html/google1c3d149877001834.html" />
+            <excludedPath path="/mmentor.ru/public_html/sitemap_iblock_7.xml" />
+            <excludedPath path="/mmentor.ru/public_html/request" />
+            <excludedPath path="/mmentor.ru/public_html/.htaccess.restore" />
+            <excludedPath path="/mmentor.ru/public_html/f822e1a98c66.html" />
+            <excludedPath path="/mmentor.ru/public_html/.top.menu.php" />
+            <excludedPath path="/mmentor.ru/public_html/mmini.png" />
+            <excludedPath path="/mmentor.ru/public_html/.htaccess" />
+            <excludedPath path="/mmentor.ru/public_html/urlrewrite.php" />
+            <excludedPath path="/mmentor.ru/public_html/.left.menu.php" />
+            <excludedPath path="/mmentor.ru/public_html/.left.menu_ext.php" />
+            <excludedPath path="/mmentor.ru/public_html/README.md" />
+            <excludedPath path="/mmentor.ru/public_html/MM_kit.pdf" />
+            <excludedPath path="/mmentor.ru/public_html/robots_bak.txt" />
+            <excludedPath path="/mmentor.ru/public_html/sitemap.xml" />
+            <excludedPath path="/mmentor.ru/public_html/.delete.html" />
+            <excludedPath path="/mmentor.ru/public_html/sitemap_files.xml" />
+            <excludedPath path="/mmentor.ru/public_html/blog" />
+            <excludedPath path="/mmentor.ru/public_html/favicon.ico" />
+            <excludedPath path="/mmentor.ru/public_html/uslugi" />
+            <excludedPath path="/mmentor.ru/public_html/sitemap_iblock_6.xml" />
+            <excludedPath path="/mmentor.ru/public_html/inwidget" />
+            <excludedPath path="/mmentor.ru/public_html/politika-konfidentsialnosti" />
+            <excludedPath path="/mmentor.ru/public_html/cmsmagazinef70ceedc6c680d4ccdda074ce1a5bf08.txt" />
+            <excludedPath path="/mmentor.ru/public_html/.access.php" />
+            <excludedPath path="/mmentor.ru/public_html/yandex_be5d1e0a60382522.html" />
+            <excludedPath path="/mmentor.ru/public_html/_inc" />
+            <excludedPath path="/mmentor.ru/public_html/mail.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/admin" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/backup" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/cache" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/components" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/css" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/fonts" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/gadgets" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/image_uploader" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/images" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/js" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/managed_cache" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/modules" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/panel" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/php_interface" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/sounds" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/themes" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/tmp" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/tools" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/wizards" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/.access.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/.settings.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/coupon_activation.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/footer.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/header.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/index.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/license_key.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/p3p.xml" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/rss.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/site_checker_44fdac684aef279e2cb107c3bfecb2f2.log" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/site_checker_94f62dc70d04bd3d52f87b93cb69565f.log" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/site_checker_a13e31ef645de85ad8d55faf8d54e036.log" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/site_checker_cd1293bf4871775916ba0f3e6acc4d72.log" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/spread.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/urlrewrite.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/virtual_file_system.php" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/web.config" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/templates/mm_copy" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/templates/brainstorm" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/templates/.default" />
+            <excludedPath path="/mmentor.ru/public_html/ajax/antispamDB.csv" />
+            <excludedPath path="/mmentor.ru/public_html/ajax/_index.php" />
+            <excludedPath path="/mmentor.ru/public_html/ajax/class/providers/native-provider.php" />
+            <excludedPath path="/mmentor.ru/public_html/ajax/class/providers/modx-provider.php" />
+            <excludedPath path="/mmentor.ru/public_html/ajax/class/csv-class.php" />
+            <excludedPath path="/mmentor.ru/public_html/ajax/class/mail-class.php" />
+            <excludedPath path="/mmentor.ru/public_html/ajax/class/specification.txt" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/html_pages" />
+            <excludedPath path="/mmentor.ru/public_html/kp_dlia_meditcinskikh_organizatcii.pdf" />
+            <excludedPath path="/mmentor.ru/public_html/bitrix/updates" />
+            <excludedPath path="/mmentor.ru/public_html/ajax/tmp" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
+  </component>
+</project>
