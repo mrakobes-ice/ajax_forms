@@ -203,13 +203,13 @@
                 "data" => array()
             ];
             //Валидация полей
-			
+
 		    //1. Определение текущего контекста		   
 		    if($this->context->Count() > 0){
-				$c = $this->context[$_c !== "" ? $_c : $this->GetCurrentContext()];			
-				
-				if(!is_null($c)){
-					
+
+				$c = $this->context[$_c !== "" ? $_c : $this->GetCurrentContext()];
+
+                if(!is_null($c)){
 					//2. Перебираем все правила проверки в контексте
                     $validated      = array();   //проверенные роли
                     $attachments    = array();
@@ -325,7 +325,7 @@
 							
 							if(gettype($rule->validators) !== "string"){
 								foreach($rule->validators as $validator => $params){ 
-
+                                    //var_dump($validator->name);
 									//Определение и вызов валидатора
 									if(gettype($validator) === "string"){
 										//с заданными параметрами (переопределение)
@@ -343,7 +343,9 @@
 
 										$r = $this->_validators[$params]->__exec($value, $p);
 									}                                                 
-
+                                    if($r===NULL){
+									    return NULL;
+                                    }
 									if(gettype($r) == "array"){
 										//!!!!!!!!!!!!!! VALIDATION ERROR !!!!!!!!!!!!!!!!
 
@@ -361,8 +363,10 @@
 									$p['uploadDir']               = is_null($c->uploadDir) ? $this->uploadDir : $c->uploadDir;
 								}
 
-								$r = $this->_validators[$rule->validators]->__exec($value, $p);			
-                                
+								$r = $this->_validators[$rule->validators]->__exec($value, $p);
+                                if($r===NULL){
+                                    return NULL;
+                                }
 								if(gettype($r) == "array"){
 									//!!!!!!!!!!!!!! VALIDATION ERROR !!!!!!!!!!!!!!!!
 

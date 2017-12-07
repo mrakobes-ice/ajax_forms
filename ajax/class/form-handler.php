@@ -326,8 +326,8 @@
 		public function Handle(){
 			global $_GLOBALS;
 			$result = array();
-			$result['status'] 			= 'success';					
-						
+			$result['status'] 			= 'success';
+
 			//1. Получаем параметры текущего контекста:
 			$cur_context_name 			= $this->validator->GetCurrentContext();
 			$cur_context 				= $this->validator->context[$cur_context_name];
@@ -373,6 +373,10 @@
 			//3. Выполняем валидацию:
 			if($result['status'] === 'success'){
 				$result 					= $this->validator->Valid($cur_context_name);
+                if($result===NULL){
+                    //throw new Exception("Error!!! form-handler 455");
+                    return NULL;
+                }
 			}
 			
 			//3.1. Постобработка
@@ -451,6 +455,7 @@
 						}
                         	                        					
                         $send_success = $_GLOBALS['CUR_PROVIDER']->Send();
+
                     }
 				}				
 				
