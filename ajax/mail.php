@@ -1,11 +1,14 @@
-<? header('Content-Type: application/json; charset=utf-8');
+<?
+//require($_SERVER["DOCUMENT_ROOT"]."/wp-load.php");
+header('Content-Type: application/json; charset=utf-8');
 	include 'class/form-handler.php';
-	//include 'class/providers/native-provider.php';
-	include 'class/providers/bitrix-provider.php';
+	include 'class/providers/native-provider.php';
+	//include 'class/providers/bitrix-provider.php';
 	//include 'class/providers/modx-provider.php';
 
 
     $fh = new FormHandler();
+    $fh->debug = false;
 	$fh->SetupValidator(function($validator){
 		//установка валидаторов, шаблонов правил...
 		$validator->AddRuleTemplate('name',[ 
@@ -58,375 +61,33 @@
 
 	//-----------------Глобальные параметры отправки "по умолчанию"----------------
 	//Основные параметры
+    $fh->to = "skobelkinsa@mmentor.ru"; //.get_option('themadmin')["email"];
+    $fh->from = "reply@blabla.ru";
 	$fh->hideCopyTo = "spam@mmentor.ru";
+	//$fh->hideCopyTo = "spam@mmentor.ru,skobelkinsa@mmentor.ru,".get_option('themadmin')["email"];
     $fh->language = "ru-RU";
 
-	$fh->SetupForm('modal-project',function($context, $settings){
-	    $settings->useAntiSpam = false;
-		$context->description = "Форма обсудить проект";
+	$fh->SetupForm('order callback',function($context, $settings){
+	    $settings->useAntiSpam = true;
+		$context->description = "Форма заказа звонка";
 		$context->successMsg = "Сообщение отправлено!";
 		$context->AddRules([
 			'name',
 			'phone',
-			'city',
-			'message',
-            'my_file' => [
-                'required' => false,
-                'label' => 'Файл',
-                'validators'=> 'attach'
-                /*'validators'=>['attach'=>[
-                    'extensions' => ['jpg','jpeg','png','gif','doc','csv','docx','zip','7z','rar','gz','xls','xlsx'],
-                    'noValidMsg' => 'Не верный формат файла!'
-                ]]*/
-            ]
-		]);
-		$context->errorMsg = "Что то пошло не так:";
-		$context->isRequiredMsg = "\"#label#\" не указан!";
-        $settings->postTemplates[] = "SEND-PROJECT";
-	});
-    $fh->SetupForm('modalsub',function($context, $settings){
-            $settings->useAntiSpam = false;
-            $context->description = "Форма Субподряд";
-            $context->successMsg = "Сообщение отправлено!";
-            $context->AddRules([
-                'company',
-                'name',
-                'phone',
-                'email',
-                'city',
-                'message',
-                'site'=>[
-                    'associateID' => 'SITE',
-                    'label' => 'Сайт вашей компани',
-                    'validators'=>'any'
-                ],
-                'special'=>[
-                    'associateID' => 'SPECIAL',
-                    'required' => true,
-                    'label' => 'Специализация вашей компании',
-                    'validators'=>'any'
-                ],
-                'age'=>[
-                    'associateID' => 'AGE',
-                    'label' => 'Срок',
-                    'validators'=>'any'
-                ],
-                'budget' => [
-                    'associateID' => 'BUDGET',
-                    'label' => 'Бюджет',
-                    'validators'=>'any'
-                ],
-                'projdesc' => [
-                    'associateID' => 'PROJDESC',
-                    'label' => 'Описание',
-                    'validators'=>'any'
-                ],
-                'my_file' => [
-                    'label' => 'Файл',
-                    'validators'=> 'attach'
-                ]
-            ]);
-            $context->errorMsg = "Что то пошло не так:";
-            $context->isRequiredMsg = "\"#label#\" не указан!";
-            $settings->postTemplates[] = "SEND-SUB";
-        });
-    $fh->SetupForm('podryadchiku',function($context, $settings){
-            $settings->useAntiSpam = false;
-            $context->description = "Форма Подрядчику";
-            $context->successMsg = "Сообщение отправлено!";
-            $context->AddRules([
-                'company',
-                'site'=>[
-                    'associateID' => 'SITE',
-                    'label' => 'Сайт вашей компани',
-                    'validators'=>'any'
-                ],
-                'special'=>[
-                    'associateID' => 'SPECIAL',
-                    'required' => true,
-                    'label' => 'Специализация вашей компании',
-                    'validators'=>'any'
-                ],
-                'technologies'=>[
-                    'associateID' => 'TECH',
-                    'label' => 'Стек технологий',
-                    'validators'=>'any'
-                ],
-                'name',
-                'phone',
-                'email',
-                'city',
-                'message',
-                'my_file' => [
-                    'label' => 'Файл',
-                    'validators'=> 'attach'
-                ]
-            ]);
-            $context->errorMsg = "Что то пошло не так:";
-            $context->isRequiredMsg = "\"#label#\" не указан!";
-            $settings->postTemplates[] = "SEND-TECH";
-        });
-    $fh->SetupForm('frilance',function($context, $settings){
-            $settings->useAntiSpam = false;
-            $context->description = "Форма Фрилансеру";
-            $context->successMsg = "Сообщение отправлено!";
-            $context->AddRules([
-                'special'=>[
-                    'associateID' => 'SPECIAL',
-                    'required' => true,
-                    'label' => 'Специализация',
-                    'validators'=>'any'
-                ],
-                'name',
-                'phone',
-                'email',
-                'city',
-                'message',
-                'my_file' => [
-                    'label' => 'Файл',
-                    'validators'=> 'attach'
-                ]
-            ]);
-            $context->errorMsg = "Что то пошло не так:";
-            $context->isRequiredMsg = "\"#label#\" не указан!";
-            $settings->postTemplates[] = "SEND-FREE";
-        });
-    $fh->SetupForm('agents',function($context, $settings){
-            $settings->useAntiSpam = false;
-            $context->description = "Форма Агенту";
-            $context->successMsg = "Сообщение отправлено!";
-            $context->AddRules([
-                'exp'=>[
-                    'associateID' => 'EXP',
-                    'label' => 'Опыт работы',
-                    'validators'=>'any'
-                ],
-                'name',
-                'phone',
-                'email',
-                'city',
-                'message',
-                'my_file' => [
-                    'label' => 'Файл',
-                    'validators'=> 'attach'
-                ]
-            ]);
-            $context->errorMsg = "Что то пошло не так:";
-            $context->isRequiredMsg = "\"#label#\" не указан!";
-            $settings->postTemplates[] = "SEND-AGENT";
-        });
-	$fh->SetupForm('modal-summary',function($context, $settings){
-	    $settings->useAntiSpam = false;
-		$context->description = "Вакансии";
-		$context->successMsg = "Сообщение отправлено!";
-		$context->AddRules([
-			'name',
-			'phone',
-			'city',
-			'message',
-            'my_file' => [
-                'required' => false,
-                'label' => 'Файл',
-                'validators'=> 'attach'
-                /*'validators'=>['attach'=>[
-                    'extensions' => ['jpg','jpeg','png','gif','doc','csv','docx','zip','7z','rar','gz','xls','xlsx'],
-                    'noValidMsg' => 'Не верный формат файла!'
-                ]]*/
-            ]
-		]);
-		$context->errorMsg = "Что то пошло не так:";
-		$context->isRequiredMsg = "\"#label#\" не указан!";
-        $settings->postTemplates[] = "SEND-SUMMARY";
-	});
-	$fh->SetupForm('subscription',function($context, $settings){		
-		$context->description = "Подписка";		
-		$context->AddRules([			
-			'city',
-			'email'
-		]);				
-		$context->errorMsg = "Что то пошло не так:";
-		$context->isRequiredMsg = "\"#label#\" не указан!";
-        $settings->postTemplates[] = "SUBSCRIPTION";
-	});
-	$fh->SetupForm('contacts',function($context, $settings){		
-		$context->description = "Контакты";
-        $context->successMsg = "Сообщение отправлено!";
-		$context->AddRules([
-			'name',
-			'phone',
-			'city',
-			'message' => [
-                'required' => false,
-				'validators' => 'any'
-				]
-		]);				
-		$context->errorMsg = "Что то пошло не так:";
-		$context->isRequiredMsg = "\"#label#\" не указан!";
-        $settings->postTemplates[] = "CONTACTS";
-	});
-	$fh->SetupForm('networking',function($context, $settings){		
-		$context->description = "Партнерам/Нетворкинг";
-        $context->successMsg = "Сообщение отправлено!";
-		$context->AddRules([
-			'name',
-			'phone' => [
-				'required' => 'false'
-			],
 			'email',
-			'city',
-			'message' => [ 
-				'label' => 'О компании',
-				'validators' => [ 
-					'regex' => [
-						'noValidMsg' => 'Опишите вашу компанию.'
-					]
-				]
-			]
-		]);				
-		$context->errorMsg = "Что то пошло не так:";
-		$context->isRequiredMsg = "Поле \"#label#\" не указано!";
-        $settings->postTemplates[] = "NETWORKING";		
-	});
-	$fh->SetupForm('order-callback',function($context, $settings){
-		$context->description = "Партнерам/Нетворкинг";
-        $context->successMsg = "Сообщение отправлено!";
-		$context->AddRules([
-			'name',
-			'phone' => [
-				'required' => 'false'
-			],
-			'city'
 		]);
 		$context->errorMsg = "Что то пошло не так:";
-		$context->isRequiredMsg = "Поле \"#label#\" не указано!";
-        $settings->postTemplates[] = "ORDER-CALLBACK";
-	});
-	$fh->SetupForm('geograf',function($context, $settings){
-		$context->description = "География присутствия";
-        $context->successMsg = "Сообщение отправлено!";
-		$context->AddRules([
-			'name',
-			'email',
-			'message',
-			'phone' => [
-				'required' => 'false'
-			],
-			'city'
-		]);
-		$context->errorMsg = "Что то пошло не так:";
-		$context->isRequiredMsg = "Поле \"#label#\" не указано!";
-        $settings->postTemplates[] = "GEOGRAF";
+		$context->isRequiredMsg = "\"#label#\" не указан!";
+        $settings->postTemplates[] = "SEND-CALLBACK";
 	});
 
     //хранилище шаблонов
-	$fh->templates->Add("SEND-PROJECT", new MailTemplate(
+	$fh->templates->Add("SEND-CALLBACK", new MailTemplate(
 		"Сообщение с сайта #SITE_NAME#.\n".
         "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
 		"Пользователь:		#USER_NAME#\n".
 		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n".
-		"Сообщение:			#MESSAGE#\n"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-    $fh->templates->Add("SEND-SUB", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Пользователь:		#USER_NAME#\n".
-		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n".
-		"Название компании:	#COMPANY#\n".
-		"Сайт компании:		#SITE#\n".
-		"Специализация:		#SPECIAL#\n".
-		"О компании:		#MESSAGE#\n".
-		"Срок выполнения:   #AGE#\n".
-		"Бюджет:		    #BUDGET#\n".
-		"Описание проекта:  #PROJDESC#\n"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-    $fh->templates->Add("SEND-TECH", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Пользователь:		#USER_NAME#\n".
-		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n".
-		"Название компании:	#COMPANY#\n".
-		"Сайт компании:		#SITE#\n".
-		"Специализация:		#SPECIAL#\n".
-        "Стек технологий:   #TECH#\n".
-        "Сообщение:		#MESSAGE#\n"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-    $fh->templates->Add("SEND-FREE", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Пользователь:		#USER_NAME#\n".
-		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n".
-        "Специализация:   #SPECIAL#\n".
-        "Сообщение:		#MESSAGE#\n"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-    $fh->templates->Add("SEND-AGENT", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Пользователь:		#USER_NAME#\n".
-		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n".
-        "Опыт работы:   #EXP#\n".
-        "Сообщение:		#MESSAGE#\n"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-
-    $fh->templates->Add("SEND-SUMMARY", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Пользователь:		#USER_NAME#\n".
-		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n".
-		"Сообщение:			#MESSAGE#\n"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-	$fh->templates->Add("ORDER-CALLBACK", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Пользователь:		#USER_NAME#\n".
-		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-	$fh->templates->Add("SUBSCRIPTION", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Адрес:				#USER_EMAIL#\n".
-        "Город:				#USER_CITY#\n"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-	$fh->templates->Add("CONTACTS", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Пользователь:		#USER_NAME#\n".
-		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n".
-		"Вопрос:			#MESSAGE#"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-	$fh->templates->Add("NETWORKING", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Пользователь:		#USER_NAME#\n".
-		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n".
-		"Вопрос:			#MESSAGE#"
-		,"Сообщение с сайта #SITE_NAME#.\n"));
-	$fh->templates->Add("GEOGRAF", new MailTemplate(
-		"Сообщение с сайта #SITE_NAME#.\n".
-        "URL: #LOCATION_URL#\n".
-		"Название формы:	#DESCRIPTION#\n\n".
-		"Пользователь:		#USER_NAME#\n".
-		"Телефон:			#USER_PHONE#\n".
-        "Город:				#USER_CITY#\n".
-		"Где:			#MESSAGE#"
+        "Почта:				#USER_EMAIL#\n"
 		,"Сообщение с сайта #SITE_NAME#.\n"));
 
 	//-----------------Локальные параметры отправки----------------
@@ -455,6 +116,6 @@
 //	$fh->templates["name"]->timeout = 10;
 //	$fh->templates["name"]->secureLevel = "none";  //"none" | "TLS" | "SSL"
 //	$fh->templates["name"]->remoteAddreses = [];   //массив адресов SMTP-серверов (адрес может содержать порт, т.е. "address:port")
-	
+
 	$fh->Handle(); //Проверка и отправка    
 ?>

@@ -259,6 +259,7 @@
 		private 		$validator 		= null;
 		public 			$templates 		= null;
 		public 			$site 			= "";
+		public          $debug          = false;
 		public function __construct(){
 			global $_GLOBALS;
 			//Проверяем установлен ли поставщик:	
@@ -329,11 +330,18 @@
 			$result['status'] 			= 'success';
 
 			//1. Получаем параметры текущего контекста:
+            if($this->debug){
+                echo "Получение контекста - ";
+            }
 			$cur_context_name 			= $this->validator->GetCurrentContext();
+            if(!isset($this->validator->context[$cur_context_name])) die();
+
 			$cur_context 				= $this->validator->context[$cur_context_name];
 			$mail_settings 				= $cur_context->additionals;
-			
-			
+
+            if($this->debug){
+                echo "ОК" . PHP_EOL;
+            }
 			
 			/*if(count($mail_settings->postTemplates) == 0 && count($mail_settings->callbackTemplates) == 0){				
 				throw new Exception('Укажите название хотя-бы одного "' . $_GLOBALS['CUR_PROVIDER']->templateStructName . '" отправки или обратного вызова!');
@@ -341,10 +349,16 @@
 			}*/
 			
 			//2. Выполняем анти-спам проверку:
+            if($this->debug){
+                echo "Антисапм-проверка - ";
+            }
             if((isset($_POST['botvalid']) && $_POST['botvalid'] !== "") || 
                (isset($_GET['botvalid']) && $_GET['botvalid'] !== "")) die();
-            
-            
+
+            if($this->debug){
+                echo "ОК" . PHP_EOL;
+            }
+
 			if($mail_settings->useAntiSpam){				
 				$k 						= $this->ASCountValid;
 				$times 					= 60*60*30;
@@ -371,6 +385,9 @@
 						
 			
 			//3. Выполняем валидацию:
+            if($this->debug){
+                echo "Валидация - ";
+            }
 			if($result['status'] === 'success'){
 				$result 					= $this->validator->Valid($cur_context_name);
                 if($result===NULL){
@@ -378,8 +395,14 @@
                     return NULL;
                 }
 			}
+            if($this->debug){
+                echo "ОК" . PHP_EOL;
+            }
 			
 			//3.1. Постобработка
+            if($this->debug){
+                echo "Постобработка - ";
+            }
 			if($result['status'] === 'success'){
 				if(!is_null($mail_settings->postValidationHandler) && is_callable($mail_settings->postValidationHandler)){
 					$result2 			    = call_user_func($mail_settings->postValidationHandler);
@@ -391,21 +414,34 @@
 					}
 				}
 			}
+            if($this->debug){
+                echo "ОК" . PHP_EOL;
+            }
 			
 			//4. Выполняем отправку:
-			if($result['status'] === 'success'){		
+			if($result['status'] === 'success'){
+                if($this->debug){
+                    echo "Отправка... ".PHP_EOL;
+                }
 				$_GLOBALS['CUR_PROVIDER']->__description 	          	  = $cur_context->description;
 				$_GLOBALS['CUR_PROVIDER']->site = $this->site;
 				
                 //переносим вложения в общую коллекцию отправки
 				$attachments = array();
-				
+
+                if($this->debug){
+                    echo "---- Обработка вложений - ";
+                }
 				if(isset($result['attachments'])){
 					foreach($result['attachments'] as $k => $v){
 						$attachments[$k] = $v;
 						unset($result['data'][$k]);
 					}
 				}
+                if($this->debug){
+                    echo "ОК" . PHP_EOL;
+                }
+
                 
 				//Гарантируем что никто не использовал данные свойства (они не используются глобально - только в шаблонах)
 				$this->attachments 		= null;
@@ -415,6 +451,9 @@
 				
 				
 				//обработка шаблонов отправки
+                if($this->debug){
+                    echo "---- Обработка шаблонов отправки (". count($mail_settings->postTemplates) . ") - ";
+                }
                 $send_success = false;
 				if(count($mail_settings->postTemplates) > 0){                    
                     foreach($mail_settings->postTemplates as $pt_name){	
@@ -457,9 +496,15 @@
                         $send_success = $_GLOBALS['CUR_PROVIDER']->Send();
 
                     }
-				}				
+				}
+                if($this->debug && !$send_success){
+                    echo "ОК" . PHP_EOL;
+                }
 				
 				//обработка шаблонов обратной отправки
+                if($this->debug){
+                    echo "---- Обработка шаблонов обратной отправки (". count($mail_settings->callbackTemplates) . ") - ";
+                }
 				if(count($mail_settings->callbackTemplates) > 0 && $send_success === false){                    
                     foreach($mail_settings->callbackTemplates as $pt_name){	
                         $_GLOBALS['CUR_PROVIDER']->cleanSendOptions();  
@@ -480,6 +525,9 @@
                         $send_success = $_GLOBALS['CUR_PROVIDER']->Send();                        	
                     }
 				}
+                if($this->debug && !$send_success){
+                    echo "ОК" . PHP_EOL;
+                }
                 
                 if($send_success !== false){
                     $result['status'] = 'fail';
@@ -507,15 +555,20 @@
 			if($result['status'] === 'success')
 				unset($result['data']);
 			
-			//5. Возвращаем ответ клиенту:	
-			
+			//5. Возвращаем ответ клиенту:
 			header('Content-Type: application/json;');
 
 			echo json_encode($result);
+
+            if($this->debug){
+                echo "Результат отправленный клиенту:" . PHP_EOL;
+                var_dump(json_encode($result));
+            }
+
 			foreach($_GLOBALS['CUR_PROVIDER']->attachments as $el){
                 unlink($el);
             }
-		}		
+		}
 	}	
     
 
