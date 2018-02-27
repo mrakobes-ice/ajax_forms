@@ -26,6 +26,8 @@
 		public $secureLevel 	= null;     //"none" | TLS | SSL
 		public $remoteAddreses 	= null;
 		public $authData		= null;		//справочник данных аутентификации
+		public $user			= null;
+        public $password		= null;
 	}
 
 	//priority: 1
@@ -565,8 +567,10 @@
                 var_dump(json_encode($result));
             }
 
-			foreach($_GLOBALS['CUR_PROVIDER']->attachments as $el){
-                unlink($el);
+			if(!is_null($_GLOBALS['CUR_PROVIDER']->attachments)) {
+                foreach ($_GLOBALS['CUR_PROVIDER']->attachments as $el) {
+                    unlink($el);
+                }
             }
 		}
 	}	

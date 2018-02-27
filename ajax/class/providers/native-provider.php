@@ -176,7 +176,7 @@
             }
             else $state = $this->api->Send();
             
-            if(!state){
+            if(!$state){
                 return $this->api->status_mail['message'];              
             }
             else return false;
